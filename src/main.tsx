@@ -6,12 +6,16 @@ import { store } from './redux';
 import Widget from './Components/Widget';
 import { WidgetPosition, WidgetType } from './types/app';
 import styles from './styles';
+import { initializeImages } from './services/initializeImages';
 
 interface IParams
     extends Record<string, string | WidgetPosition | WidgetType | undefined> {
     position?: WidgetPosition;
     type?: WidgetType;
 }
+
+// Initialize images
+initializeImages();
 
 // Inject styles
 const styleElement = document.createElement('style');
@@ -48,7 +52,7 @@ ReactDOM.createRoot(chatRoot).render(
         <Provider store={store}>
             <Widget
                 position={scriptParams.position ?? WidgetPosition.Left}
-                type={scriptParams.type ?? WidgetType.Circle}
+                type={scriptParams.type ?? WidgetType.Rectangle}
             />
         </Provider>
     </React.StrictMode>

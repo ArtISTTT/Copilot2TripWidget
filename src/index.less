@@ -79,3 +79,151 @@ button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
+
+.widgetWrapper {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    z-index: 100;
+
+    &.right {
+        left: unset;
+        right: 0;
+
+        .widgetBtn {
+            margin-left: auto;
+            margin-right: 0;
+        }
+    }
+
+    .widgetBtn {
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+    }
+
+    &.opened {
+        width: fit-content;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &.right .widgetContent {
+        align-items: flex-end;
+    }
+
+    &.right .widgetCloseIcon {
+        right: unset;
+        left: -12px;
+        transform: translate(50%, 0);
+    }
+
+    &.reacangle {
+        left: 0;
+        bottom: 0;
+        width: fit-content;
+        height: fit-content;
+
+        &.right {
+            left: unset;
+            right: 0;
+        }
+
+        .widgetContent {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+
+            .widgetContentWrapper {
+                height: 567px;
+                transition: height 0.25s ease-in-out;
+            }
+        }
+
+        .widgetContentHeader {
+            box-sizing: border-box;
+            cursor: pointer;
+            height: 60px;
+
+            > img {
+                width: 122px;
+            }
+        }
+
+        .widgetContentFrame {
+            display: none;
+
+            &.show {
+                display: block;
+            }
+        }
+
+        &:not(.opened) .widgetContent {
+            .widgetContentWrapper {
+                height: 0;
+            }
+        }
+    }
+
+    .widgetCloseIcon {
+        position: absolute;
+        right: -12px;
+        top: 0;
+        transform: translate(-50%, 0);
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    .widgetContent {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: hidden;
+        width: 353px;
+        border-radius: 24px;
+        margin: 0 40px;
+
+        .widgetContentFrame {
+            max-height: 100vh;
+            height: 567px;
+            width: 100%;
+
+            iframe {
+                border: none !important;
+            }
+        }
+    }
+
+    .widgetContentHeader {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background: #5f3ae0;
+        padding: 10px 16px;
+        height: 60px;
+
+        .button {
+            cursor: pointer;
+            padding: 9px 12px 10px 12px;
+            background-color: #2bcf7c;
+            border-radius: 14px;
+            box-shadow: 0px 0px 15px 0px rgba(43, 207, 124, 0.6);
+            color: #ffffff;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 150%;
+        }
+    }
+}

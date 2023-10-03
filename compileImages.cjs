@@ -3,12 +3,29 @@ const path = require('path');
 const sharp = require('sharp');
 
 const IMAGES_DIR = './src/assets/images';
-const OUTPUT_FILE = 'path-to-output-dir/images.js';
+const OUTPUT_FILE = './src/images.ts';
 
-const imageFiles = fs.readdirSync(IMAGES_DIR);
+function getFiles(dir) {
+    const dirents = fs.readdirSync(dir, { withFileTypes: true });
+    const files = dirents.map(dirent => {
+        const res = path.resolve(dir, dirent.name);
+        return dirent.isDirectory() ? getFiles(res) : res;
+    });
+    return Array.prototype.concat(...files);
+}
 
-const imagesPromises = imageFiles.map(file => {
-    const filePath = path.join(IMAGES_DIR, file);
+const imageFiles = getFiles(IMAGES_DIR);
+
+const imagesPromises = imageFiles.map(filePath => {
+    const file = path.basename(filePath);
+
+    if (path.extname(file) === '.svg') {
+        const svgContent = fs.readFileSync(filePath, 'utf8');
+        const base64Image = `data:image/svg+xml;base64,${Buffer.from(
+            svgContent
+        ).toString('base64')}`;
+        return Promise.resolve([file, base64Image]);
+    }
 
     return sharp(filePath)
         .toBuffer()
@@ -17,13 +34,20 @@ const imagesPromises = imageFiles.map(file => {
                 .extname(file)
                 .slice(1)};base64,${buffer.toString('base64')}`;
             return [file, base64Image];
+        })
+        .catch(error => {
+            console.error(`Ошибка при обработке файла ${file}:`, error.message);
+            return [file, null]; // Возвращаем null, чтобы файл не вносил вклад в итоговый результат
         });
 });
 
 Promise.all(imagesPromises).then(images => {
     const imagesObject = images.reduce((obj, [filename, base64]) => {
-        const key = path.basename(filename, path.extname(filename)); // используем имя файла без расширения как ключ объекта
-        obj[key] = base64;
+        if (base64) {
+            // Убедимся, что у нас есть допустимое значение base64
+            const key = path.basename(filename, path.extname(filename));
+            obj[key] = base64;
+        }
         return obj;
     }, {});
 
@@ -31,6 +55,6 @@ Promise.all(imagesPromises).then(images => {
         imagesObject,
         null,
         2
-    )};`;
+    )} as Record<string, string>;`;
     fs.writeFileSync(OUTPUT_FILE, jsContent, 'utf8');
 });
