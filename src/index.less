@@ -17,6 +17,14 @@
         box-sizing: border-box;
         outline: none;
     }
+
+    img {
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+    }
 }
 
 a {
@@ -42,6 +50,16 @@ a {
         }
     }
 
+    @media screen and (max-width: 567px) {
+        width: 100% !important;
+        top: 0;
+        bottom: 0;
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
     .widgetBtn {
         width: 100px;
         height: 100px;
@@ -56,12 +74,24 @@ a {
         align-items: flex-end;
 
         .widgetCircleContentWrapper {
-            display: block;
+            display: flex;
+            @media screen and (max-width: 567px) {
+                flex: 1;
+            }
         }
     }
 
     .widgetCircleContentWrapper {
         display: none;
+        flex-direction: column;
+
+        .widgetContent {
+            flex: 1;
+        }
+
+        @media screen and (max-width: 567px) {
+            width: 100%;
+        }
     }
 
     &.right .widgetContent {
@@ -88,10 +118,16 @@ a {
         .widgetContent {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
+            height: 627px;
+            transition: height 0.25s ease-in-out;
+
+            @media screen and (max-width: 567px) {
+                height: 100%;
+            }
 
             .widgetContentWrapper {
-                height: 567px;
-                transition: height 0.25s ease-in-out;
+                width: 100%;
+                flex: 1;
             }
         }
 
@@ -114,9 +150,10 @@ a {
         }
 
         &:not(.opened) .widgetContent {
-            .widgetContentWrapper {
-                height: 0;
-            }
+            height: 60px;
+            // .widgetContentWrapper {
+            //     height: 0;
+            // }
         }
     }
 
@@ -128,6 +165,10 @@ a {
         width: 30px;
         height: 30px;
         cursor: pointer;
+
+        @media screen and (max-width: 567px) {
+            display: none;
+        }
 
         img {
             width: 30px;
@@ -144,13 +185,28 @@ a {
         border-radius: 24px;
         margin: 0 40px;
 
+        @media screen and (max-width: 567px) {
+            margin: 0;
+            width: 100%;
+            border-radius: 0;
+        }
+
         .widgetContentFrame {
             max-height: 100vh;
             height: 567px;
             width: 100%;
 
+            @media screen and (max-width: 567px) {
+                flex: 1;
+                height: 100%;
+            }
+
             iframe {
                 border: none !important;
+                @media screen and (max-width: 567px) {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
             }
         }
     }
