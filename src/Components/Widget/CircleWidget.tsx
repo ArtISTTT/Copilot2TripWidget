@@ -22,14 +22,12 @@ const CircleWidget: React.FC<IProps> = ({ position }) => {
                 opened: isOpened,
             })}
         >
-            {isOpened && (
-                <>
-                    <WidgetContent />
-                    <div className='widgetCloseIcon' onClick={onClose}>
-                        <img src={images.close} />
-                    </div>
-                </>
-            )}
+            <div className='widgetCircleContentWrapper'>
+                <WidgetContent />
+                <div className='widgetCloseIcon' onClick={onClose}>
+                    <img src={images.close} />
+                </div>
+            </div>
             <img
                 src={images['logo-btn']}
                 className='widgetBtn'

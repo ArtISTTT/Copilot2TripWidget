@@ -50,8 +50,8 @@ ReactDOM.createRoot(chatRoot).render(
     <React.StrictMode>
         <Provider store={store}>
             <Widget
-                position={scriptParams.position ?? WidgetPosition.Left}
-                type={scriptParams.type ?? WidgetType.Rectangle}
+                position={scriptParams.position ?? WidgetPosition.Right}
+                type={scriptParams.type ?? WidgetType.Circle}
             />
         </Provider>
     </React.StrictMode>
