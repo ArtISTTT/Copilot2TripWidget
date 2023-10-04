@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { store } from './redux';
 import Widget from './Components/Widget';
 import { WidgetPosition, WidgetType } from './types/app';
-import styles from './styles';
 import { initializeImages } from './services/initializeImages';
+import styles from './styles';
 
 interface IParams
     extends Record<string, string | WidgetPosition | WidgetType | undefined> {
@@ -41,9 +41,8 @@ function getScriptParams() {
 const scriptParams = getScriptParams();
 
 // Create root element
-const chatRoot = document.createElement('div', {
-    is: 'copilot2tripWdiget',
-});
+const chatRoot = document.createElement('div');
+chatRoot.id = 'copilot2tripWdiget';
 document.body.appendChild(chatRoot);
 
 // Render widget
