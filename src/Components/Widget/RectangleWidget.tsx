@@ -61,6 +61,7 @@ const RectangleWidget: React.FC<IProps> = ({ position }) => {
                             width='353'
                             height='567'
                             title='Copilot Widget'
+                            allow='microphone'
                         />
                     </div>
                 </div>

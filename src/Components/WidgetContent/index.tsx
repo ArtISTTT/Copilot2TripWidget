@@ -10,6 +10,7 @@ const WidgetContent: React.FC = () => {
                     width='353'
                     height='567'
                     title='Copilot Widget'
+                    allow='microphone'
                 />
             </div>
         </div>
