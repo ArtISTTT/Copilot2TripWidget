@@ -8,6 +8,7 @@ const options = {
     compress: true,
 };
 
+// Список шрифтов, которые нужно сконвертировать в base64
 const availableFonts = [
     {
         name: 'Montserrat-Bold.ttf',
@@ -24,6 +25,7 @@ function fontToBase64(fontPath) {
     return fontData.toString('base64');
 }
 
+// Функция для получения всех font-face'ов
 const getFontFaces = () => {
     const fontsDir = './src/assets/fonts/';
 
@@ -47,6 +49,8 @@ const getFontFaces = () => {
     return fontFaces;
 };
 
+// Компилируем LESS в CSS
+// TODO: Добавить комлиляцию всех модульных LESS-файлов в проекте
 less.render(lessContent, options, (err, output) => {
     if (err) {
         console.error('Error compiling LESS:', err);

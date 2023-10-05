@@ -19,6 +19,7 @@ const imageFiles = getFiles(IMAGES_DIR);
 const imagesPromises = imageFiles.map(filePath => {
     const file = path.basename(filePath);
 
+    // Sharp не обрабатывает svg и возвращает ошибку - обрабатываем их отдельно
     if (path.extname(file) === '.svg') {
         const svgContent = fs.readFileSync(filePath, 'utf8');
         const base64Image = `data:image/svg+xml;base64,${Buffer.from(
@@ -27,6 +28,7 @@ const imagesPromises = imageFiles.map(filePath => {
         return Promise.resolve([file, base64Image]);
     }
 
+    // Иначе обрабатываем с помощью sharp
     return sharp(filePath)
         .toBuffer()
         .then(buffer => {
@@ -51,6 +53,7 @@ Promise.all(imagesPromises).then(images => {
         return obj;
     }, {});
 
+    // Записываем в файл объект с base64-изображениями
     const jsContent = `export default ${JSON.stringify(
         imagesObject,
         null,
